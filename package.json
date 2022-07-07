@@ -1,0 +1,22 @@
+{
+  "name": "tmnext-dedicated-tracking",
+  "version": "1.0.0",
+  "description": "Using Github Actions",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GreepTheSheep/tmnext-dedicated-tracking.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GreepTheSheep/tmnext-dedicated-tracking/issues"
+  },
+  "homepage": "https://github.com/GreepTheSheep/tmnext-dedicated-tracking#readme",
+  "dependencies": {
+    "node-fetch": "^2.6.7"
+  }
+}

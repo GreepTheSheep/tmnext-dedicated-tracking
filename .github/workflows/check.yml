@@ -1,0 +1,47 @@
+name: TMNext Dedicated Version Check
+
+on:
+  schedule:
+    - cron: "0 */1 * * *"
+  workflow_dispatch:
+
+permissions: write-all
+
+jobs:
+  check:
+    name: Version Check and Update
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: npm
+      - name: Install dependencies
+        run: npm i
+      - name: Check for server updates
+        run: npm start
+      - name: Check if changes were made
+        id: check-changes
+        run: |
+          if [ -z "$(git diff --name-only HEAD)" ]; \
+          then echo '::set-output name=changed::false'; \
+          else echo '::set-output name=changed::true'; fi
+      - name: Get Date
+        if: steps.check-changes.outputs.changed == 'true'
+        id: get-date
+        run: echo "::set-output name=date::$(date '+%Y-%m-%d %H-%M-%S')"
+      - name: Commit files
+        if: steps.check-changes.outputs.changed == 'true'
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git commit -am ":arrows_clockwise: ${{ steps.get-date.outputs.date }}"
+      - name: Push changes
+        if: steps.check-changes.outputs.changed == 'true'
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GH_TOKEN }}
+          branch: ${{ github.ref }}
