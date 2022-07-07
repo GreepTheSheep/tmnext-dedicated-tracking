@@ -22,7 +22,7 @@ jobs:
       - name: Install dependencies
         run: npm i
       - name: Check for server updates
-        run: npm start
+        run: node src/index.js
       - name: Check if changes were made
         id: check-changes
         run: |
