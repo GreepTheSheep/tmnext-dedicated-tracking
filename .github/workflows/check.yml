@@ -32,7 +32,7 @@ jobs:
       - name: Get Date
         if: steps.check-changes.outputs.changed == 'true'
         id: get-date
-        run: echo "::set-output name=date::$(date '+%Y-%m-%d %H-%M-%S')"
+        run: echo "::set-output name=date::$(date '+%Y-%m-%d %H:%M:%S')"
       - name: Commit files
         if: steps.check-changes.outputs.changed == 'true'
         run: |
