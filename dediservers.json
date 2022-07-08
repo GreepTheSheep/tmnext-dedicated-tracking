@@ -4,10 +4,18 @@
         "timestamp": 1656428558,
         "url": "https://nadeo-download.cdn.ubi.com/trackmania/TrackmaniaServer_Latest.zip",
         "versionDate": "2022-06-28",
-        "size": "539815638",
+        "size": 539815638,
         "urlValid": true
     },
     "versions": [
+        {
+            "date": "2022-06-28T15:02:38.000Z",
+            "timestamp": 1656428558,
+            "url": "https://nadeo-download.cdn.ubi.com/trackmania/TrackmaniaServer_2022-06-28.zip",
+            "versionDate": "2022-06-28",
+            "size": 539815638,
+            "urlValid": false
+        },
         {
             "date": "2022-06-28T15:02:38.000Z",
             "timestamp": 1656428558,
