@@ -11,7 +11,7 @@ let dediserversJson = JSON.parse(fs.readFileSync('./dediservers.json', 'utf8'));
 
     const lastModified = new Date(res.headers.get('last-modified'));
 
-    if (typeof dediserversJson.latest == "object" && lastModified == dediserversJson.latest.date) {
+    if (typeof dediserversJson.latest == "object" && (lastModified.getTime() / 1000) == dediserversJson.latest.timestamp) {
         console.log("No new version.");
         process.exit(0);
     }
