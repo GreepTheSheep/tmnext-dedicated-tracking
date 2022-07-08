@@ -1,6 +1,6 @@
 const fetch = require('node-fetch'),
     fs = require('fs'),
-    dedicatedUrl = "http://files.v04.maniaplanet.com/server/TrackmaniaServer";
+    dedicatedUrl = "https://nadeo-download.cdn.ubi.com/trackmania/TrackmaniaServer";
 let dediserversJson = JSON.parse(fs.readFileSync('./dediservers.json', 'utf8'));
 
 (async () => {
