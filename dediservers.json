@@ -1,14 +1,20 @@
-[
-    {
+{
+    "latest": {
+        "date": "2022-06-28T15:02:38.000Z",
         "timestamp": 1656428558,
-        "url": "https://nadeo-download.cdn.ubi.com/trackmania/TrackmaniaServer_2022-06-28.zip",
-        "date": "2022-06-28",
-        "urlValid": false
+        "url": "https://nadeo-download.cdn.ubi.com/trackmania/TrackmaniaServer_Latest.zip",
+        "versionDate": "2022-06-28",
+        "size": "539815638",
+        "urlValid": true
     },
-    {
-        "timestamp": 1656345493,
-        "url": "http://files.v04.maniaplanet.com/server/TrackmaniaServer_2022-06-27.zip",
-        "date": "2022-06-27",
-        "urlValid": false
-    }
-]
+    "versions": [
+        {
+            "date": "2022-06-28T15:02:38.000Z",
+            "timestamp": 1656428558,
+            "url": "https://nadeo-download.cdn.ubi.com/trackmania/TrackmaniaServer_2022-06-28.zip",
+            "versionDate": "2022-06-28",
+            "size": "539815638",
+            "urlValid": false
+        }
+    ]
+}

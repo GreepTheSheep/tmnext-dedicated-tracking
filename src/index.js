@@ -1,15 +1,17 @@
 const fetch = require('node-fetch'),
     fs = require('fs'),
     dedicatedUrl = "https://nadeo-download.cdn.ubi.com/trackmania/TrackmaniaServer";
+
+if (!fs.existsSync('./dediservers.json')) fs.writeFileSync('./dediservers.json', '{}');
 let dediserversJson = JSON.parse(fs.readFileSync('./dediservers.json', 'utf8'));
 
 (async () => {
     console.log('Fetching latest dedicated server:', dedicatedUrl+"_Latest.zip");
     let res = await fetch(dedicatedUrl+"_Latest.zip");
 
-    let lastModified = new Date(res.headers.get('last-modified'));
+    const lastModified = new Date(res.headers.get('last-modified'));
 
-    if (dediserversJson.length > 0 && (lastModified.getTime() / 1000) == dediserversJson[0].timestamp) {
+    if (typeof dediserversJson.latest == "object" && lastModified == dediserversJson.latest.date) {
         console.log("No new version.");
         process.exit(0);
     }
@@ -20,24 +22,39 @@ let dediserversJson = JSON.parse(fs.readFileSync('./dediservers.json', 'utf8'));
     if (month < 10) month = "0" + month;
     else month = month.toString();
 
-    let dateStr = lastModified.getFullYear()+"-"+month+"-"+lastModified.getDate();
+    const dateStr = lastModified.getFullYear()+"-"+month+"-"+lastModified.getDate(),
+        size = Number(res.headers.get('content-length'));
 
-    console.log("New version found:", dateStr, "("+res.headers.get('content-length')+" bytes)");
+    console.log("New version found:", dateStr, "("+size+" bytes)");
+
+    let jsonAdd = {
+        date: lastModified,
+        timestamp: lastModified.getTime() / 1000,
+        url: dedicatedUrl+"_Latest.zip",
+        versionDate: dateStr,
+        size,
+        urlValid: res.ok
+    }
+
+    dediserversJson.latest = jsonAdd;
 
     res = await fetch(dedicatedUrl+"_"+dateStr+".zip");
 
-    if (!res.ok) console.error("Error fetching dedicated server version:", res.statusText);
+    if (!res.ok) console.error("Error fetching dedicated server version:", res.status, res.statusText);
 
-    let jsonAdd = {
+    jsonAdd = {
+        date: lastModified,
         timestamp: lastModified.getTime() / 1000,
         url: dedicatedUrl+"_"+dateStr+".zip",
-        date: dateStr,
+        versionDate: dateStr,
+        size,
         urlValid: res.ok
     }
 
     console.log(JSON.stringify(jsonAdd, null, 2));
 
-    dediserversJson.unshift(jsonAdd);
+    if (!Array.isArray(dediserversJson.versions)) dediserversJson.versions = [];
+    dediserversJson.versions.unshift(jsonAdd);
 
     fs.writeFileSync('./dediservers.json', JSON.stringify(dediserversJson, null, 4));
 
